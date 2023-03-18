@@ -29,6 +29,13 @@ class App(QWidget):
         self.button.setStyleSheet("background-color: green;")
         self.button.clicked.connect(self.showDialog)
 
+        self.browser_button = QPushButton('Open Browser', self)
+        self.browser_button.setToolTip('Open Browser')
+        self.browser_button.move(self.width / 2 - self.browser_button.width() / 2,
+                                 self.height / 3 * 2 - self.browser_button.height() / 2)
+        self.browser_button.setStyleSheet("background-color: blue;")
+        self.browser_button.clicked.connect(self.open_browser)
+
         self.label = QLabel(self)
         self.label.setGeometry(10, 10, self.width - 20, self.height - 150)
         self.label.setAlignment(Qt.AlignCenter)
@@ -43,12 +50,19 @@ class App(QWidget):
 
         vbox = QVBoxLayout()
         vbox.addWidget(self.button)
+        vbox.addWidget(self.browser_button)
         vbox.addWidget(self.label)
         vbox.addWidget(self.filename_label)
+
 
         self.setLayout(vbox)
 
         self.show()
+
+    def open_browser(self):
+        import webbrowser
+        url = 'https://www.google.com'
+        webbrowser.open(url)
 
     def showDialog(self):
         fname, _ = QFileDialog.getOpenFileName(self, 'Open file', '/home', 'Images (*.png *.xpm *.jpg *.bmp)')
